@@ -1,0 +1,80 @@
+.latest-events {
+  padding: 60px 80px;
+  background-color: #ffffff;
+}
+
+.events-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.events-header h2 {
+  font-size: 32px;
+  color: #0a5db8;
+}
+
+.view-all-btn {
+  padding: 10px 20px;
+  background-color: #0a5db8;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.view-all-btn:hover {
+  background-color: #084a93;
+}
+
+.events-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.event-card {
+  background-color: #f5f7fa;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.event-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.event-content {
+  padding: 16px;
+}
+
+.event-content h3 {
+  font-size: 18px;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.event-content p {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 12px;
+}
+
+.view-btn {
+  padding: 8px 14px;
+  background-color: transparent;
+  border: 1px solid #0a5db8;
+  color: #0a5db8;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.view-btn:hover {
+  background-color: #0a5db8;
+  color: #ffffff;
+}
