@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../Styles/LatestEvents.css";
+import "../../Styles/LatestEvents.css";
 
 export default function LatestEvents() {
   const navigate = useNavigate();
