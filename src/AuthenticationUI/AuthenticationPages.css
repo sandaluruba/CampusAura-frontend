@@ -1,0 +1,151 @@
+:root {
+  --primary: #0a5db8;      /* Campus Hub Blue */
+  --primary-dark: #084a93;
+  --secondary: #f5f7fa;    /* Light background */
+  --dark: #0f172a;         /* Heading text */
+  --gray: #64748b;         /* Sub text */
+  --light: #ffffff;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI";
+    background-color: var(--secondary);
+    justify-content: center;
+}
+
+.auth-container{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-card{
+    background: var(--secondary);
+    width: 100%;
+    max-width: 420px;
+    padding: 30px ;
+    /*padding-right: 50px;*/
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styles */
+.auth-card h1{
+    color: var(--dark);
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.auth-card h2{
+    text-align: center;
+    margin-bottom: 5px
+}
+
+.auth-card p{
+    text-align: center;
+    color: var(--gray);
+    margin-bottom: 25px;
+}
+
+/*Form Styles*/
+.auth-form label{
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.forgetpwd{
+    float: right;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+}
+.forgetpwd:hover{
+    text-decoration: underline;
+}
+
+.auth-form input{
+    width : 95%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.auth-form input[type="file"] {
+    width: 97%;
+    padding: 6px;
+}
+
+.auth-form input:focus{
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* File Upload Styles */
+.file-upload{
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Button Styles */
+.auth-form button{
+    width: 100%;
+    background-color: var(--primary);
+    color: var(--light);
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.auth-form button:hover{
+    background-color: var(--primary-dark);
+}
+
+/* Error Message Styles */
+.error_message{
+    background-color: #ffe5e5;
+    color: #d8000c;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.auth-Link{
+    margin-top: 15px;
+    text-align: center;
+    font-size: 15px;
+}
+
+.auth-Link a{
+    color:  var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-Link a:hover{
+    text-decoration: underline;
+}
+
+/*Upload Icon*/
+.auth-form svg{
+    vertical-align: middle;
+    margin-right: 6px;
+    font-size: 18px;
+}
+
+
+
+ 

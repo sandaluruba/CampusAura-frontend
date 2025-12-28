@@ -1,20 +1,20 @@
-import React from "react";
-import { BrowserRouter } from "react-router-dom";
-import Navbar from "./Components/Navbar.jsx";
-import HeroSlider from "./Components/HeroSlider.jsx";
-import IntroSection from "./Components/IntroSection.jsx";   
-import LatestEvents from "./Components/LatestEvents.jsx"; 
+import { Route,Routes } from "react-router-dom"
+import Login from "./AuthenticationUI/login";
+import Register from "./AuthenticationUI/register";
+import NormalUserSignUp from "./AuthenticationUI/SignUp";
+ 
 
 function App() {
+  
+
   return (
-    <BrowserRouter>
-      <Navbar />
-      <HeroSlider />
-      <IntroSection />
-      <LatestEvents />
-    </BrowserRouter>
-  );
+     <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/SignUp" element={<NormalUserSignUp />} />
+     </Routes>
+  )
 }
 
-export default App;
-
+export default App
