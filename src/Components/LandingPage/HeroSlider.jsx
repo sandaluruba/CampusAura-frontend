@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import "../Styles/HeroSlide.css";
+import "../../Styles/HeroSlide.css";
 
 const slides = [
   {
