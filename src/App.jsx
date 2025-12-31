@@ -1,11 +1,10 @@
+import React from "react";
+
 import { Route,Routes } from "react-router-dom"
 import Login from "./AuthenticationUI/login";
 import Register from "./AuthenticationUI/register";
 import NormalUserSignUp from "./AuthenticationUI/SignUp";
 
-
-import React from "react";
-import { BrowserRouter } from "react-router-dom";
 import Navbar from "./Components/Navbar.jsx";
 import HeroSlider from "./Components/LandingPage/HeroSlider.jsx";
 import IntroSection from "./Components/LandingPage/IntroSection.jsx";
@@ -34,17 +33,15 @@ function Home() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public pages */}
-        <Route path="/" element={<Home />} />
+    <Routes>
+      {/* Public pages */}
+      <Route path="/" element={<Home />} />
 
-        {/* Auth pages */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/signup" element={<NormalUserSignUp />} />
-      </Routes>
-    </BrowserRouter>
+      {/* Auth pages */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/signup" element={<NormalUserSignUp />} />
+    </Routes>
   );
 }
 
