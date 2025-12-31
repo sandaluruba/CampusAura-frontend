@@ -16,23 +16,11 @@ import Features from "./Components/LandingPage/Features.jsx";
 import ContactUs from "./Components/LandingPage/ContactUs.jsx";
 import Footer from "./Components/LandingPage/Footer.jsx";
 
-function App() {
-  
-
+function Home() {
   return (
-     <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/SignUp" element={<NormalUserSignUp />} />
-     </Routes>
-  )
-}
-
-export default App
-    <BrowserRouter>
+    <>
       <Navbar />
-      <HeroSlider />  
+      <HeroSlider />
       <IntroSection />
       <LatestEvents />
       <AboutSection />
@@ -40,7 +28,24 @@ export default App
       <Features />
       <ContactUs />
       <Footer />
+    </>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Public pages */}
+        <Route path="/" element={<Home />} />
+
+        {/* Auth pages */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/signup" element={<NormalUserSignUp />} />
+      </Routes>
     </BrowserRouter>
   );
 }
+
 export default App;
