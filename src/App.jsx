@@ -1,3 +1,8 @@
+import { Route,Routes } from "react-router-dom"
+import Login from "./AuthenticationUI/login";
+import Register from "./AuthenticationUI/register";
+import NormalUserSignUp from "./AuthenticationUI/SignUp";
+
 
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
@@ -12,10 +17,22 @@ import ContactUs from "./Components/LandingPage/ContactUs.jsx";
 import Footer from "./Components/LandingPage/Footer.jsx";
 
 function App() {
+  
+
   return (
+     <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/SignUp" element={<NormalUserSignUp />} />
+     </Routes>
+  )
+}
+
+export default App
     <BrowserRouter>
       <Navbar />
-      <HeroSlider />
+      <HeroSlider />  
       <IntroSection />
       <LatestEvents />
       <AboutSection />
