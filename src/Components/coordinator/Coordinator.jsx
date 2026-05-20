@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Context/AuthContext';
 import '../admin/Admin.css';
-import { MdEvent, MdFeedback, MdEmail, MdConfirmationNumber } from 'react-icons/md';
+import { MdEvent, MdFeedback, MdConfirmationNumber } from 'react-icons/md';
+
 import logo from '../../assets/logo-alt.png';
 import EventManagementSection from './EventManagementSection';
 import TicketManagementSection from './TicketManagementSection';
@@ -46,10 +47,6 @@ function Coordinator() {
           <h2>Coordinator Dashboard</h2>
         </div>
         <div className="topbar-right">
-          <div className="notification-icon">
-            <MdEmail style={{ color: '#0A5DB8', fontSize: '2rem', verticalAlign: 'middle' }} />
-            <span className="notification-badge">3</span>
-          </div>
           <button className="logout-btn" onClick={handleLogout}>Logout</button>
         </div>
       </div>

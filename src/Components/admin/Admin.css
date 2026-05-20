@@ -1,5 +1,5 @@
 .admin-topbar {
-  height: 70px;
+  height: 72px;
   background-color: var(--light);
   border-bottom: 1px solid #e5e7eb;
   display: flex;
@@ -22,9 +22,8 @@
 }
 
 .topbar-logo {
-  height: 55px;
+  height: 62px;
   width: auto;
-  max-width: 200px;
   object-fit: contain;
   cursor: pointer;
   display: block;
@@ -109,7 +108,7 @@
   background-color: #1f2937;
   color: #fff;
   position: fixed;
-  top: 70px;
+  top: 72px;
   bottom: 0;
   left: 0;
   padding-top: 32px;
@@ -138,7 +137,7 @@
 
 .admin-sidebar-list li:hover {
   background-color: #1b1d20;
-  color:#e0e7ef;
+  color: #e0e7ef;
   /* padding-left: 0px; */
 }
 
@@ -146,7 +145,7 @@
   background-color: #4160a4;
   color: #fff;
   font-weight: 200;
-  box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
 }
 
 .sidebar-icon {
@@ -164,8 +163,7 @@
 /* MAIN CONTENT - Scrollable area */
 .admin-main-content {
   margin-left: 230px;
-  margin-top: 70px;
-  min-height: calc(100vh - 70px);
+  margin-top: 72px;
+  min-height: calc(100vh - 72px);
   background-color: #f3f4f6;
 }
-

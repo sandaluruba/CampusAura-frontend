@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Context/AuthContext';
 import './Admin.css';
-import { MdDashboard, MdPeople, MdEvent, MdPerson, MdShoppingCart, MdEmail, MdConfirmationNumber, MdStorefront } from 'react-icons/md';
+import { MdDashboard, MdPeople, MdEvent, MdPerson, MdShoppingCart, MdConfirmationNumber, MdStorefront } from 'react-icons/md';
+
 import logo from '../../assets/logo-alt.png';
 import AdminDashboard from './AdminDashboard';
 import ManageCoordinators from './ManageCoordinators';
@@ -29,7 +30,8 @@ function AdminTopBar() {
   const renderContent = () => {
     switch (activeSection) {
       case 'overview':
-        return <AdminDashboard />;
+        return <AdminDashboard onNavigate={setActiveSection} />;
+
       case 'events':
         return <EventManagement />;
       case 'coordinators':
@@ -58,10 +60,6 @@ function AdminTopBar() {
           <h2>Admin Dashboard</h2>
         </div>
         <div className="topbar-right">
-          <div className="notification-icon">
-            <MdEmail style={{ color: '#0A5DB8', fontSize: '2rem', verticalAlign: 'middle' }} />
-            <span className="notification-badge">3</span>
-          </div>
           <button className="logout-btn" onClick={handleLogout}>Logout</button>
         </div>
       </div>
