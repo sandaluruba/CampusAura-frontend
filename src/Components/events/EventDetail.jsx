@@ -203,8 +203,6 @@ export default function EventDetails() {
   }
 
   const imageUrl = getValidImageUrl(event.eventImageUrls);
-  const totalSpots = event.totalSpots || 500;
-  const availableSpots = event.availableSpots || 180;
 
   return (
     <>
@@ -279,6 +277,73 @@ export default function EventDetails() {
             </section>
           )}
 
+          {/* Payment Details Section – shown only when coordinator filled in account details */}
+          {event.accountDetails && event.accountDetails.accountName && (
+            <section className="section-block">
+              <h3>Payment Details</h3>
+              <div className="payment-details-card">
+                <div className="payment-details-grid">
+                  {event.accountDetails.accountName && (
+                    <div className="payment-row">
+                      <span className="payment-label">Account Name</span>
+                      <span className="payment-value">{event.accountDetails.accountName}</span>
+                    </div>
+                  )}
+                  {event.accountDetails.accountNumber && (
+                    <div className="payment-row">
+                      <span className="payment-label">Account Number</span>
+                      <span className="payment-value payment-mono">{event.accountDetails.accountNumber}</span>
+                    </div>
+                  )}
+                  {event.accountDetails.phone && (
+                    <div className="payment-row">
+                      <span className="payment-label">Phone</span>
+                      <span className="payment-value">{event.accountDetails.phone}</span>
+                    </div>
+                  )}
+                  {event.accountDetails.role && (
+                    <div className="payment-row">
+                      <span className="payment-label">Role</span>
+                      <span className="payment-value">{event.accountDetails.role}</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Coordinator email for posting receipts */}
+                {event.coordinatorEmail && (
+                  <div className="payment-receipt-row">
+                    <span className="payment-receipt-label">📧 Send payment receipt to:</span>
+                    <a
+                      href={`mailto:${event.coordinatorEmail}?subject=Payment Receipt – ${event.title}&body=Hi, please find attached my payment receipt for the event: ${event.title}.`}
+                      className="payment-email-link"
+                    >
+                      {event.coordinatorEmail}
+                    </a>
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
+
+          {/* Sponsors Section – shown only when sponsors exist */}
+          {event.sponsors && event.sponsors.length > 0 && (
+            <section className="section-block">
+              <h3>Our Sponsors</h3>
+              <div className="sponsors-grid">
+                {event.sponsors.map((sponsor, idx) => (
+                  <div key={idx} className="sponsor-card">
+                    <div className="sponsor-tier-badge sponsor-tier-badge--{(sponsor.tier || '').toLowerCase()}">
+                      {sponsor.tier === 'Platinum' ? '🏆' : sponsor.tier === 'Gold' ? '⭐' : '🥈'}
+                      {sponsor.tier || 'Sponsor'}
+                    </div>
+                    <div className="sponsor-name">{sponsor.name}</div>
+                    {sponsor.amount && <div className="sponsor-amount">{sponsor.amount}</div>}
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
           {/* Past Event Gallery */}
           {event.galleryImages && event.galleryImages.length > 0 && (
             <section className="section-block">
@@ -286,22 +351,6 @@ export default function EventDetails() {
               <div className="gallery-grid">
                 {event.galleryImages.map((image, idx) => (
                   <img key={idx} src={image} alt={`Gallery ${idx + 1}`} className="gallery-image" />
-                ))}
-              </div>
-            </section>
-          )}
-
-          {/* Sponsorship Panel */}
-          {event.sponsors && event.sponsors.length > 0 && (
-            <section className="section-block">
-              <h3>Our Sponsors</h3>
-              <div className="sponsors-grid">
-                {event.sponsors.map((sponsor, idx) => (
-                  <div key={idx} className="sponsor-card">
-                    <div className="sponsor-logo">{sponsor.logo}</div>
-                    <div className="sponsor-tier">{sponsor.tier}</div>
-                    <div className="sponsor-amount">{sponsor.amount}</div>
-                  </div>
                 ))}
               </div>
             </section>
@@ -359,10 +408,10 @@ export default function EventDetails() {
             <h4 className="organizer-title">Organized by</h4>
             <div className="organizer-info">
               <div className="organizer-avatar">
-                {event.organizingDepartment ? event.organizingDepartment.charAt(0) : 'C'}
+                {event.coordinatorDegree ? event.coordinatorDegree.charAt(0).toUpperCase() : (event.organizingDepartment ? event.organizingDepartment.charAt(0) : 'C')}
               </div>
               <div>
-                <p className="organizer-name">{event.organizingDepartment || 'Campus Organization'}</p>
+                <p className="organizer-name">{event.coordinatorDegree || event.organizingDepartment || 'Campus Organization'}</p>
                 <p className="organizer-type">Campus Organization</p>
               </div>
             </div>
@@ -371,17 +420,6 @@ export default function EventDetails() {
 
         {/* RIGHT SIDE - Ticket Booking (25%) */}
         <div className="event-ticket-panel">
-          {/* Spots Available */}
-          <div className="spots-section">
-            <div className="spots-header">
-              <span className="spots-label">Spots Available</span>
-              <span className="spots-count">{availableSpots}/{totalSpots}</span>
-            </div>
-            <div className="progress-bar">
-              <div className="progress-fill" style={{ width: `${(availableSpots / totalSpots) * 100}%` }}></div>
-            </div>
-          </div>
-
           {/* Number of Tickets - Only if available */}
           {event.ticketsAvailable ? (
             <>

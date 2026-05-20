@@ -1,0 +1,129 @@
+.sponsor-hint {
+  font-size: 13.5px;
+  color: #64748b;
+  margin: 0 0 20px 0;
+  line-height: 1.5;
+}
+
+/* Three-column grid for the tier cards */
+.sponsor-tiers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+/* Each tier card */
+.sponsor-tier-card {
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px 18px 18px;
+  background: #fff;
+  transition: box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sponsor-tier-card:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+}
+
+/* Tier-specific accent colours */
+.sponsor-tier--platinum {
+  border-color: #b0c4de;
+  background: linear-gradient(135deg, #f8f9ff 0%, #eef2ff 100%);
+}
+
+.sponsor-tier--gold {
+  border-color: #f5b944;
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+}
+
+.sponsor-tier--silver {
+  border-color: #cbd5e1;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+/* Header row inside each card */
+.sponsor-tier-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.sponsor-tier-emoji {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.sponsor-tier-label {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.sponsor-tier--platinum .sponsor-tier-label {
+  color: #3730a3;
+}
+
+.sponsor-tier--gold .sponsor-tier-label {
+  color: #92400e;
+}
+
+.sponsor-tier--silver .sponsor-tier-label {
+  color: #475569;
+}
+
+/* Field groups */
+.sponsor-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sponsor-field-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.sponsor-input {
+  padding: 10px 13px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #1e293b;
+  background: rgba(255, 255, 255, 0.8);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sponsor-input::placeholder {
+  color: #94a3b8;
+}
+
+.sponsor-input:focus {
+  outline: none;
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+  background: #fff;
+}
+
+/* Responsive */
+@media (max-width: 820px) {
+  .sponsor-tiers-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .sponsor-tiers-grid {
+    grid-template-columns: 1fr;
+  }
+}

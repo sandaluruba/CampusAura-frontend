@@ -666,3 +666,100 @@ body {
   color: var(--primary);
 }
 
+/* ── Payment Details Section ── */
+.payment-details-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.payment-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 32px;
+  margin-bottom: 20px;
+}
+
+.payment-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.payment-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.payment-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.payment-mono {
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+.payment-receipt-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+  flex-wrap: wrap;
+}
+
+.payment-receipt-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.payment-email-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+  padding: 6px 14px;
+  background: rgba(10, 93, 184, 0.08);
+  border: 1px solid rgba(10, 93, 184, 0.2);
+  border-radius: 20px;
+  transition: all 0.2s ease;
+}
+
+.payment-email-link:hover {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+/* ── Sponsor Card Updates ── */
+.sponsor-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 10px 0 6px;
+}
+
+.sponsor-tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  margin-bottom: 2px;
+}
+
+.sponsor-tier-badge--platinum { background: #eef2ff; color: #3730a3; }
+.sponsor-tier-badge--gold     { background: #fef3c7; color: #92400e; }
+.sponsor-tier-badge--silver   { background: #f1f5f9; color: #475569; }
