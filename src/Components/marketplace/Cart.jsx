@@ -35,8 +35,8 @@ export default function Cart() {
   };
 
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const shipping = 500;
-  const total = subtotal + shipping;
+  const total = subtotal;
+
 
   const handleCheckout = () => {
     if (!currentUser) {
@@ -51,7 +51,6 @@ export default function Cart() {
       state: {
         items: cartItems,
         subtotal,
-        shipping,
         total,
       }
     });
@@ -106,9 +105,9 @@ export default function Cart() {
                   <span>Subtotal</span>
                   <span>LKR {subtotal.toFixed(2)}</span>
                 </div>
-                <div className="cart-summary-row">
-                  <span>Shipping</span>
-                  <span>LKR {shipping.toFixed(2)}</span>
+                <div className="cart-summary-row" style={{ color: '#16a34a', fontWeight: 600 }}>
+                  <span>Delivery</span>
+                  <span>Free</span>
                 </div>
                 <div className="cart-summary-divider"></div>
                 <div className="cart-summary-total">

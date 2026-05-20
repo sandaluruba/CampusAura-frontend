@@ -72,9 +72,6 @@ function generateProductReceipt(purchaseData) {
   doc.text('Subtotal:', 120, y);
   doc.text(`LKR ${(purchaseData.subtotal || 0).toLocaleString()}`, 175, y);
   y += 10;
-  doc.text('Shipping:', 120, y);
-  doc.text(`LKR ${(purchaseData.shipping || 0).toLocaleString()}`, 175, y);
-  y += 10;
   doc.setFontSize(14);
   doc.setTextColor(10, 93, 184);
   doc.text('Total:', 120, y);
@@ -157,7 +154,6 @@ function CartCheckoutForm({ cartData }) {
         generateProductReceipt({
           ...saleData,
           subtotal: cartData.subtotal,
-          shipping: cartData.shipping,
         });
 
         // 5. Clear cart
@@ -197,10 +193,6 @@ function CartCheckoutForm({ cartData }) {
             <span>LKR {(item.price * item.quantity).toLocaleString()}</span>
           </div>
         ))}
-        <div className="summary-row">
-          <span>Shipping</span>
-          <span>LKR {cartData.shipping.toLocaleString()}</span>
-        </div>
         <div className="summary-total">
           <span>Total</span>
           <span>LKR {cartData.total.toLocaleString()}</span>
