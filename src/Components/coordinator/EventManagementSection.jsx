@@ -72,10 +72,10 @@ function EventManagementSection() {
     }
 
     setIsSaving(true);
-    
+
     try {
       const token = await currentUser.getIdToken();
-      
+
       // Prepare event data for API
       const eventPayload = {
         title: eventData.eventName,
@@ -110,12 +110,12 @@ function EventManagementSection() {
       };
 
       console.log('Creating event with data:', eventPayload);
-      
+
       const response = await createEvent(eventPayload, token);
-      
+
       console.log('Event created successfully:', response);
       alert('Event created successfully! Event ID: ' + response.eventId);
-      
+
     } catch (error) {
       console.error('Failed to create event:', error);
       alert('Failed to create event: ' + error.message);
@@ -190,11 +190,11 @@ function EventManagementSection() {
 
       <div className="event-details-management">
         <h2 className="section-heading">Event Details Management</h2>
-        
+
         {/* Basic Information Section */}
         <div className="form-section">
           <h3 className="form-section-title">Basic Information</h3>
-          
+
           <div className="form-group full-width">
             <label className="form-label">Event Name</label>
             <input
@@ -247,7 +247,7 @@ function EventManagementSection() {
         {/* Account Details Section */}
         <div className="form-section">
           <h3 className="form-section-title">Account Details</h3>
-          
+
           <div className="form-group full-width">
             <label className="form-label">Account Name</label>
             <input
@@ -313,7 +313,7 @@ function EventManagementSection() {
         {/* Ticket Management Section */}
         <div className="form-section">
           <h3 className="form-section-title">Ticket Management</h3>
-          
+
           <div className="form-group full-width">
             <label className="form-label" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <input
@@ -330,9 +330,9 @@ function EventManagementSection() {
             <>
               <div className="schedule-header" style={{ marginTop: '20px' }}>
                 <h4 style={{ fontSize: '16px', fontWeight: '500' }}>Ticket Categories</h4>
-                <button 
+                <button
                   type="button"
-                  className="add-item-btn" 
+                  className="add-item-btn"
                   onClick={() => setShowAddTicket(!showAddTicket)}
                 >
                   <span>+</span> Add Ticket
@@ -374,16 +374,16 @@ function EventManagementSection() {
                     </div>
                   </div>
                   <div className="schedule-form-actions">
-                    <button 
+                    <button
                       type="button"
-                      className="schedule-save-btn" 
+                      className="schedule-save-btn"
                       onClick={handleAddTicketCategory}
                     >
                       Save
                     </button>
-                    <button 
+                    <button
                       type="button"
-                      className="schedule-cancel-btn" 
+                      className="schedule-cancel-btn"
                       onClick={() => setShowAddTicket(false)}
                     >
                       Cancel
@@ -402,16 +402,16 @@ function EventManagementSection() {
                       </p>
                     </div>
                     <div className="schedule-item-actions">
-                      <button 
+                      <button
                         type="button"
-                        className="schedule-edit-btn" 
+                        className="schedule-edit-btn"
                         onClick={() => handleEditTicketCategory(ticket.id)}
                       >
                         <HiPencilAlt />
                       </button>
-                      <button 
+                      <button
                         type="button"
-                        className="schedule-delete-btn" 
+                        className="schedule-delete-btn"
                         onClick={() => handleDeleteTicketCategory(ticket.id)}
                       >
                         <HiOutlineTrash />
@@ -504,7 +504,7 @@ function EventManagementSection() {
       {/* Event Flyers & Posters Section */}
       <div className="event-flyers-container">
         <h2 className="flyers-title">Event Flyers & Posters</h2>
-        
+
         <div className="flyers-grid">
           {/* Upload Box */}
           <label className="upload-box">
@@ -523,8 +523,8 @@ function EventManagementSection() {
           {uploadedImages.map((image) => (
             <div key={image.id} className="image-preview-box">
               <img src={image.url} alt={image.name} className="preview-image" />
-              <button 
-                className="remove-image-btn" 
+              <button
+                className="remove-image-btn"
                 onClick={() => handleRemoveImage(image.id)}
               >
                 ×

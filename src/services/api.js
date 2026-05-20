@@ -519,6 +519,25 @@ export const fetchProductSales = async () => {
   }
 };
 
+/**
+ * Fetch ticket sales for events managed by the authenticated coordinator
+ * Uses GET /api/events/coordinator/ticket-sales
+ */
+export const fetchCoordinatorTicketSales = async () => {
+  try {
+    const token = await getAuthToken();
+    const response = await fetch(`${API_BASE_URL}/api/events/coordinator/ticket-sales`, {
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+    if (!response.ok) throw new Error('Failed to fetch coordinator ticket sales');
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching coordinator ticket sales:', error);
+    throw error;
+  }
+};
+
+
 // ============================================================
 // Utility Helpers
 // ============================================================

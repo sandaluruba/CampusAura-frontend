@@ -11,9 +11,9 @@ export default function Navbar() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  
+
   const isMarketplace = location.pathname.toLowerCase().includes('marketplace');
-  
+
   const getCartCount = () => {
     const cart = localStorage.getItem('cart');
     if (cart) {

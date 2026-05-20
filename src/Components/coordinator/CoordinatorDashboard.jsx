@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import './CoordinatorDashboard.css';
-import { MdEvent, MdMail, MdFeedback } from 'react-icons/md';
+import { MdEvent, MdMail, MdDashboard } from 'react-icons/md';
 import { MdConfirmationNumber } from 'react-icons/md';
 import EventManagementSection from './EventManagementSection';
 import TicketManagementSection from './TicketManagementSection';
 import CommunityFeedbackSection from './CommunityFeedbackSection';
 
 function CoordinatorDashboard() {
-  const [activeSection, setActiveSection] = useState('community');
+  const [activeSection, setActiveSection] = useState('dashboard');
 
   const renderContent = () => {
     switch (activeSection) {
@@ -15,7 +15,7 @@ function CoordinatorDashboard() {
         return <EventManagementSection />;
       case 'tickets':
         return <TicketManagementSection />;
-      case 'community':
+      case 'dashboard':
         return <CommunityFeedbackSection />;
       default:
         return <CommunityFeedbackSection />;
@@ -48,6 +48,14 @@ function CoordinatorDashboard() {
         <div className="coordinator-sidebar">
           <ul className="coordinator-sidebar-list" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
             <li
+              className={activeSection === 'dashboard' ? 'active' : ''}
+              onClick={() => setActiveSection('dashboard')}
+              style={{ display: 'flex', alignItems: 'center', gap: '14px' }}
+            >
+              <MdDashboard className="sidebar-icon" />
+              <span>Dashboard</span>
+            </li>
+            <li
               className={activeSection === 'events' ? 'active' : ''}
               onClick={() => setActiveSection('events')}
               style={{ display: 'flex', alignItems: 'center', gap: '14px' }}
@@ -62,14 +70,6 @@ function CoordinatorDashboard() {
             >
               <MdConfirmationNumber className="sidebar-icon" />
               <span>Ticket Management</span>
-            </li>
-            <li
-              className={activeSection === 'community' ? 'active' : ''}
-              onClick={() => setActiveSection('community')}
-              style={{ display: 'flex', alignItems: 'center', gap: '14px' }}
-            >
-              <MdFeedback className="sidebar-icon" />
-              <span>Community & Feedback</span>
             </li>
           </ul>
         </div>
