@@ -205,6 +205,27 @@ export const getCurrentUser = async (token) => {
   }
 };
 
+/** Update student profile details (degree program and student ID url) */
+export const updateStudentProfileApi = async (userData) => {
+  try {
+    const token = await getAuthToken();
+    const response = await fetch(`${API_BASE_URL}/api/user/profile/student`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Failed to update student profile');
+    return data;
+  } catch (error) {
+    console.error('Update student profile error:', error);
+    throw error;
+  }
+};
+
 /** Get user session information */
 export const getSession = async (token) => {
   try {

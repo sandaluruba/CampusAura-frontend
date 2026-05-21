@@ -1,14 +1,57 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../Context/AuthContext";
+import CoordinatorProductSection from "../Components/coordinator/CoordinatorProductSection";
+import { storage } from "../firebase/firebaseConfig";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { updateStudentProfileApi } from "../services/api";
+import { GrUpload } from "react-icons/gr";
 import "../Styles/theme.css";
 
 export default function Profile() {
-  const { userData, currentUser } = useAuth();
+  const { userData, currentUser, refreshUserData } = useAuth();
   const [tab, setTab] = useState("Profile");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [profilePic, setProfilePic] = useState(null);
+
+  // Student ID upload states
+  const [idFile, setIdFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
+  const [uploadSuccess, setUploadSuccess] = useState(false);
+
+  const handleIdUpload = async (e) => {
+    e.preventDefault();
+    if (!idFile) {
+      setUploadError("Please select a file to upload.");
+      return;
+    }
+    setUploading(true);
+    setUploadError("");
+    setUploadSuccess(false);
+
+    try {
+      // Upload to Firebase Storage
+      const storageRef = ref(storage, `student-ids/${currentUser.uid}/${idFile.name}`);
+      await uploadBytes(storageRef, idFile);
+      const downloadURL = await getDownloadURL(storageRef);
+
+      // Call Backend to update profile
+      await updateStudentProfileApi({ studentIdUrl: downloadURL });
+      
+      setUploadSuccess(true);
+      setIdFile(null);
+      
+      // Refresh Auth Context
+      await refreshUserData();
+    } catch (err) {
+      console.error("ID upload error:", err);
+      setUploadError(err.message || "Failed to upload student ID. Please try again.");
+    } finally {
+      setUploading(false);
+    }
+  };
 
   // Populate fields from user data fetched from backend
   useEffect(() => {
@@ -36,7 +79,7 @@ export default function Profile() {
       >
         {/* Tabs */}
         <div style={{ display: "flex", gap: "2rem", marginBottom: "2rem" }}>
-          {["Profile", "Security"].map((t) => (
+          {["Profile", "Security", ...(userData?.role === "STUDENT" ? ["My Products & Sales"] : [])].map((t) => (
             <button
               key={t}
               onClick={() => setTab(t)}
@@ -317,6 +360,121 @@ export default function Profile() {
                 Update Password
               </button>
             </form>
+          </div>
+        )}
+        {/* My Products & Sales tab */}
+        {tab === "My Products & Sales" && userData?.role === "STUDENT" && (
+          <div>
+            {!userData.verified ? (
+              !userData.studentIdUrl ? (
+                <div style={{
+                  background: "var(--light)",
+                  borderRadius: 16,
+                  padding: "4rem 2rem",
+                  textAlign: "center",
+                  maxWidth: 600,
+                  margin: "2rem auto",
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.06)"
+                }}>
+                  <div style={{ fontSize: "4.5rem", marginBottom: "1.5rem" }}>🛡️</div>
+                  <h3 style={{ fontSize: "1.8rem", fontWeight: 700, color: "var(--dark)", marginBottom: "0.75rem" }}>ID Verification Required</h3>
+                  <p style={{ color: "var(--gray)", fontSize: "1.1rem", lineHeight: "1.6", margin: "0 auto 1.5rem auto", maxWidth: "480px" }}>
+                    To list and sell items on Campus Marketplace, you must first verify your student profile by uploading a photo of your Student ID.
+                  </p>
+                  
+                  <form onSubmit={handleIdUpload} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
+                    <div style={{
+                      border: "2px dashed var(--gray)",
+                      borderRadius: 12,
+                      padding: "2rem",
+                      width: "100%",
+                      maxWidth: "400px",
+                      position: "relative",
+                      background: "var(--secondary)",
+                      cursor: "pointer"
+                    }}>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          setIdFile(e.target.files[0]);
+                          setUploadError("");
+                        }}
+                        style={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          width: "100%",
+                          height: "100%",
+                          opacity: 0,
+                          cursor: "pointer"
+                        }}
+                        required
+                      />
+                      <GrUpload style={{ fontSize: "2rem", color: "var(--primary)", marginBottom: "0.5rem", display: "inline-block" }} />
+                      <div style={{ fontWeight: 500, color: "var(--dark)" }}>
+                        {idFile ? idFile.name : "Click to select ID photo"}
+                      </div>
+                      <div style={{ fontSize: "0.85rem", color: "var(--gray)", marginTop: "0.25rem" }}>
+                        PNG, JPG or JPEG up to 10MB
+                      </div>
+                    </div>
+
+                    {uploadError && (
+                      <div style={{ color: "#ef4444", fontSize: "0.95rem", fontWeight: 500 }}>
+                        {uploadError}
+                      </div>
+                    )}
+
+                    {uploadSuccess && (
+                      <div style={{ color: "#10b981", fontSize: "0.95rem", fontWeight: 500 }}>
+                        Student ID uploaded successfully! Submitting for verification...
+                      </div>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={uploading || !idFile}
+                      style={{
+                        background: "var(--primary)",
+                        color: "#fff",
+                        fontWeight: 600,
+                        fontSize: "1.1rem",
+                        border: "none",
+                        borderRadius: 8,
+                        padding: "0.75rem 2.5rem",
+                        cursor: (uploading || !idFile) ? "not-allowed" : "pointer",
+                        opacity: (uploading || !idFile) ? 0.6 : 1,
+                        transition: "all 0.2s"
+                      }}
+                    >
+                      {uploading ? "Uploading ID..." : "Submit for Verification"}
+                    </button>
+                  </form>
+                </div>
+              ) : (
+                <div style={{
+                  background: "var(--light)",
+                  borderRadius: 16,
+                  padding: "4rem 2rem",
+                  textAlign: "center",
+                  maxWidth: 600,
+                  margin: "2rem auto",
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.06)"
+                }}>
+                  <div style={{ fontSize: "4.5rem", marginBottom: "1.5rem" }}>🔒</div>
+                  <h3 style={{ fontSize: "1.8rem", fontWeight: 700, color: "var(--dark)", marginBottom: "0.75rem" }}>Verification Pending</h3>
+                  <p style={{ color: "var(--gray)", fontSize: "1.1rem", lineHeight: "1.6", margin: "0 auto", maxWidth: "480px" }}>
+                    Your student account must be approved by an administrator before you can list and sell items on the platform.
+                  </p>
+                  <p style={{ color: "var(--gray)", fontSize: "0.95rem", marginTop: "1.5rem", fontStyle: "italic" }}>
+                    Please ensure your Student ID image was clearly visible. Reviews usually take less than 24 hours.
+                  </p>
+                </div>
+              )
+            ) : (
+              <CoordinatorProductSection />
+            )}
           </div>
         )}
       </div>
