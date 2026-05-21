@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Context/AuthContext';
 import '../admin/Admin.css';
-import { MdEvent, MdFeedback, MdConfirmationNumber } from 'react-icons/md';
+import { MdEvent, MdFeedback, MdConfirmationNumber, MdStorefront } from 'react-icons/md';
 
 import logo from '../../assets/logo-alt.png';
 import EventManagementSection from './EventManagementSection';
 import TicketManagementSection from './TicketManagementSection';
 import CommunityFeedbackSection from './CommunityFeedbackSection';
+import CoordinatorProductSection from './CoordinatorProductSection';
 
 function Coordinator() {
   const [activeSection, setActiveSection] = useState('community');
@@ -29,6 +30,8 @@ function Coordinator() {
         return <EventManagementSection />;
       case 'tickets':
         return <TicketManagementSection />;
+      case 'products':
+        return <CoordinatorProductSection />;
       case 'community':
         return <CommunityFeedbackSection />;
       default:
@@ -79,6 +82,14 @@ function Coordinator() {
             >
               <MdConfirmationNumber className="sidebar-icon" />
               <span>Ticket Management</span>
+            </li>
+            <li
+              className={activeSection === "products" ? "active" : ""}
+              onClick={() => setActiveSection("products")}
+              style={{display: 'flex', alignItems: 'center', gap: '14px'}}
+            >
+              <MdStorefront className="sidebar-icon" />
+              <span>My Products</span>
             </li>
           </ul>
         </div>

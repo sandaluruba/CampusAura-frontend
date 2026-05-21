@@ -344,6 +344,34 @@ export const deleteProduct = async (id) =>
   adminRequest(`/products/${id}`, { method: 'DELETE' });
 
 // ============================================================
+// Coordinator - Product Management
+// ============================================================
+
+const coordinatorProductRequest = async (path, options = {}) => {
+  const { getAuth } = await import('firebase/auth');
+  const token = await getAuth().currentUser?.getIdToken();
+  const res = await fetch(`${API_BASE_URL}/api/coordinator/products${path}`, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      ...(options.headers || {}),
+    },
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const fetchMyProducts        = () => coordinatorProductRequest('/my');
+export const fetchMyOrders          = () => coordinatorProductRequest('/orders');
+export const createCoordinatorProduct = (data) =>
+  coordinatorProductRequest('', { method: 'POST', body: JSON.stringify(data) });
+export const updateCoordinatorProduct = (id, data) =>
+  coordinatorProductRequest(`/${id}`, { method: 'PUT', body: JSON.stringify(data) });
+export const deleteCoordinatorProduct = (id) =>
+  coordinatorProductRequest(`/${id}`, { method: 'DELETE' });
+
+// ============================================================
 // Admin - Payment / Transaction Management
 // ============================================================
 

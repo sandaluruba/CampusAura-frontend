@@ -3,6 +3,8 @@ import { MdCalendarToday } from 'react-icons/md';
 import { HiOutlineTrash, HiPencilAlt, HiUpload } from "react-icons/hi";
 import { useAuth } from '../../Context/AuthContext';
 import { createEvent } from '../../services/api';
+import { uploadFiles } from '../../utils/uploadToStorage';
+
 import './CoordinatorDashboard.css';
 import './SponsorSection.css';
 
@@ -37,7 +39,9 @@ function EventManagementSection() {
   const [newScheduleItem, setNewScheduleItem] = useState({ title: '', time: '', duration: '' });
   const [showAddSchedule, setShowAddSchedule] = useState(false);
   const [uploadedImages, setUploadedImages] = useState([]);
-  const [isSaving, setIsSaving] = useState(false);
+  const [isSaving, setIsSaving]             = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(null); // null | 0-100
+
 
   // Ticket management states
   const [ticketsEnabled, setTicketsEnabled] = useState(false);
@@ -59,16 +63,19 @@ function EventManagementSection() {
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
     const newImages = files.map(file => ({
-      id: Date.now() + Math.random(),
-      url: URL.createObjectURL(file),
-      name: file.name
+      id:      Date.now() + Math.random(),
+      file,                              // keep the raw File for upload
+      preview: URL.createObjectURL(file), // local preview only
+      name:    file.name,
     }));
-    setUploadedImages([...uploadedImages, ...newImages]);
+    setUploadedImages(prev => [...prev, ...newImages]);
   };
 
+
   const handleRemoveImage = (id) => {
-    setUploadedImages(uploadedImages.filter(img => img.id !== id));
+    setUploadedImages(prev => prev.filter(img => img.id !== id));
   };
+
 
   const handleEventInputChange = (e) => {
     const { name, value } = e.target;
@@ -87,7 +94,21 @@ function EventManagementSection() {
 
     setIsSaving(true);
     try {
-      const token = await currentUser.getIdToken();
+      const token  = await currentUser.getIdToken();
+      const uid    = currentUser.uid;
+
+      // ── 1. Upload images to Firebase Storage ─────────────────────────
+      let imageUrls = [];
+      const filesToUpload = uploadedImages.map(img => img.file).filter(Boolean);
+      if (filesToUpload.length > 0) {
+        setUploadProgress(0);
+        imageUrls = await uploadFiles(
+          filesToUpload,
+          `events/${uid}`,
+          (pct) => setUploadProgress(pct)
+        );
+        setUploadProgress(null);
+      }
 
       // Build sellItems from filled-in sponsor tiers
       const sellItems = SPONSOR_TIERS
@@ -112,7 +133,7 @@ function EventManagementSection() {
           availableCount: ticket.availableCount
         })) : [],
         pastEventDetails: [],
-        eventImageUrls: uploadedImages.map(img => img.url),
+        eventImageUrls: imageUrls,
         sellItems,
         organizingDepartment: null,
         category: null,
@@ -349,8 +370,19 @@ function EventManagementSection() {
           )}
         </div>
 
-        <button className="save-button" onClick={handleSaveChanges} disabled={isSaving}>
-          {isSaving ? 'Saving...' : 'Save Changes'}
+        {/* Upload progress */}
+        {uploadProgress !== null && (
+          <div style={{ margin: '12px 0' }}>
+            <div style={{ fontSize: '13px', color: '#475569', marginBottom: '6px' }}>
+              Uploading images… {uploadProgress}%
+            </div>
+            <div style={{ background: '#e2e8f0', borderRadius: '99px', height: '8px', overflow: 'hidden' }}>
+              <div style={{ width: `${uploadProgress}%`, height: '100%', background: 'linear-gradient(90deg,#0284c7,#38bdf8)', borderRadius: '99px', transition: 'width 0.3s ease' }} />
+            </div>
+          </div>
+        )}
+        <button className="save-button" onClick={handleSaveChanges} disabled={isSaving || uploadProgress !== null}>
+          {uploadProgress !== null ? `Uploading… ${uploadProgress}%` : isSaving ? 'Saving…' : 'Save Changes'}
         </button>
       </div>
 
@@ -410,7 +442,7 @@ function EventManagementSection() {
           </label>
           {uploadedImages.map((image) => (
             <div key={image.id} className="image-preview-box">
-              <img src={image.url} alt={image.name} className="preview-image" />
+              <img src={image.preview} alt={image.name} className="preview-image" />
               <button className="remove-image-btn" onClick={() => handleRemoveImage(image.id)}>×</button>
             </div>
           ))}

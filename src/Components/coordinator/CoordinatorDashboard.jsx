@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import './CoordinatorDashboard.css';
-import { MdEvent, MdMail, MdDashboard } from 'react-icons/md';
+import { MdEvent, MdMail, MdDashboard, MdStorefront } from 'react-icons/md';
 import { MdConfirmationNumber } from 'react-icons/md';
 import EventManagementSection from './EventManagementSection';
 import TicketManagementSection from './TicketManagementSection';
 import CommunityFeedbackSection from './CommunityFeedbackSection';
+import CoordinatorProductSection from './CoordinatorProductSection';
 
 function CoordinatorDashboard() {
   const [activeSection, setActiveSection] = useState('dashboard');
@@ -15,6 +16,8 @@ function CoordinatorDashboard() {
         return <EventManagementSection />;
       case 'tickets':
         return <TicketManagementSection />;
+      case 'products':
+        return <CoordinatorProductSection />;
       case 'dashboard':
         return <CommunityFeedbackSection />;
       default:
@@ -70,6 +73,14 @@ function CoordinatorDashboard() {
             >
               <MdConfirmationNumber className="sidebar-icon" />
               <span>Ticket Management</span>
+            </li>
+            <li
+              className={activeSection === 'products' ? 'active' : ''}
+              onClick={() => setActiveSection('products')}
+              style={{ display: 'flex', alignItems: 'center', gap: '14px' }}
+            >
+              <MdStorefront className="sidebar-icon" />
+              <span>My Products</span>
             </li>
           </ul>
         </div>

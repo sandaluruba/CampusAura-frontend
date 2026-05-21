@@ -404,18 +404,20 @@ export default function EventDetails() {
           </section>
 
           {/* Organizer Card */}
-          <div className="organizer-card">
-            <h4 className="organizer-title">Organized by</h4>
-            <div className="organizer-info">
-              <div className="organizer-avatar">
-                {event.coordinatorDegree ? event.coordinatorDegree.charAt(0).toUpperCase() : (event.organizingDepartment ? event.organizingDepartment.charAt(0) : 'C')}
-              </div>
-              <div>
-                <p className="organizer-name">{event.coordinatorDegree || event.organizingDepartment || 'Campus Organization'}</p>
-                <p className="organizer-type">Campus Organization</p>
+          {(event.coordinatorDegree || event.organizingDepartment) && (
+            <div className="organizer-card">
+              <h4 className="organizer-title">Organized by</h4>
+              <div className="organizer-info">
+                <div className="organizer-avatar">
+                  {(event.coordinatorDegree || event.organizingDepartment).charAt(0).toUpperCase()}
+                </div>
+                <div>
+                  <p className="organizer-name">{event.coordinatorDegree || event.organizingDepartment}</p>
+                  <p className="organizer-type">Campus Organization</p>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* RIGHT SIDE - Ticket Booking (25%) */}
